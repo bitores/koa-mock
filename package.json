@@ -1,0 +1,39 @@
+{
+  "name": "@huangzj/koa-mock",
+  "version": "1.0.0",
+  "description": "mock for koa middleware",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "koa-mock",
+    "koa",
+    "mock",
+    "middleware"
+  ],
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitores/koa-mock.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.4",
+    "debug": "^4.0.1",
+    "koa-proxies": "^0.7.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bitores/koa-mock/issues"
+  },
+  "homepage": "https://github.com/bitores/koa-mock#readme",
+  "devDependencies": {
+    "koa": "^2.5.3",
+    "koa-router": "^7.4.0"
+  }
+}
