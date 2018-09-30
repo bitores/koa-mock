@@ -93,7 +93,7 @@ function createProxy(method, pathPattern, target) {
 
         return path.replace(ctx.originalUrl.replace(matchPath, ''), targetPath);
       }
-    })(ctx);
+    });
   };
 }
 

@@ -1,53 +1,74 @@
-# express-mock
+# koa-mock
 
 
 #### install 
 
-> npm i --save @huangzj/express-mock
+> npm i --save @huangzj/koa-mock
 
 #### e.g.
 ```
-const express = require('express')
+var Koa = require('koa');
 
-const mockMiddleware = require("@huangzj/express-mock");
+const mockMiddleware = require("@huangzj/koa-mock");
 
-const app = express();
+var app = new Koa();
 
-app.use('/mock', mockMiddleware())
+app.use(mockMiddleware())
 
 app.listen(8000)
 ```
 
 #### .mock.js
 ```
-module.exports =  {
-  // Support type as Object and Array
-  'GET /api/users': { users: [1,2] },
+module.exports = {
+    // Support type as Object and Array
+    'GET /api/users': {
+        users: [1, 2]
+    },
 
-  // Method like GET or POST can be omitted
-  '/api/users/1': { id: 1 },
+    // Method like GET or POST can be omitted
+    '/api/users/1': {
+        id: 1
+    },
+    'GET /api/uses/45': {
+        code: 0,
+        data: [],
+        msg: "323"
+    },
+    'GET /api/:id': (ctx, next) => {
+        ctx.body = {
+            id: ctx.params.id
+        }
 
-  'POST /api/users': (req, res) => {
-      const id = parseInt(req.query.id);
-      switch (id) {
-          case 1:
-              res.json({
-                  success: true,
-                  data: {id: id},
-              });
-              break;
-          default:
-              res.json({
-                  success: true,
-                  data: {id:id},
-              });
-          break;
-      }
-  },
+    },
 
-  // Support for custom functions, the API is the same as express@4
-  'POST /api/users/create': (req, res) => { res.end('OK'); },
-  // /cnode/api 会被代理到 https://cnodejs.org/api, 不能代理 https
-  'GET /cnode/(.*)':'http://shrek.imdevsh.com'
+    'POST /api/users': (ctx) => {
+        const id = parseInt(ctx.query.id);
+        switch (id) {
+            case 1:
+                ctx.body = {
+                    success: true,
+                    data: {
+                        id: id
+                    },
+                };
+                break;
+            default:
+                ctx.body = {
+                    success: true,
+                    data: {
+                        id: id
+                    },
+                };
+                break;
+        }
+    },
+
+    // Support for custom functions, the API is the same as express@4
+    'POST /api/users/create': (ctx) => {
+        ctx.body = "OK";
+    },
+    // /cnode/api 会被代理到 https://cnodejs.org/api, 不能代理 https
+    'GET /cnode/(.*)': 'http://shrek.imdevsh.com'
 };
 ```
