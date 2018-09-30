@@ -9,7 +9,6 @@ const url = require('url');
 const assert = require('assert');
 const chokidar = require('chokidar');
 const chalk = require('chalk');
-// const proxy = require('http-proxy-middleware');
 const proxy = require('koa-proxies')
 
 var Router = require('koa-router');
@@ -59,30 +58,17 @@ function createMockHandler(method, path, value) {
 }
 
 function createProxy(method, pathPattern, target) {
-  // const filter = (_, req) => {
-  //   return method ? req.method.toLowerCase() === method.toLowerCase() : true;
-  // };
+
   const parsedUrl = url.parse(target);
   const realTarget = [parsedUrl.protocol, parsedUrl.host].join('//');
   const targetPath = parsedUrl.path;
 
-  // const pathRewrite = (path, req) => {
-  //   let matchPath = req.originalUrl;
-  //   const matches = matchPath.match(pathPattern);
+  console.log(pathPattern)
 
-  //   if (matches.length > 1) {
-  //     matchPath = matches[1];
-  //   }
-
-  //   return path.replace(req.originalUrl.replace(matchPath, ''), targetPath);
-  // };
-  // let fn = proxy(filter, {
-  //   target: realTarget,
-  //   pathRewrite
-  // });
-  return (ctx) => {
-    return proxy('', {
+  return (ctx, next) => {
+    return proxy(pathPattern, {
       target: realTarget,
+      changeOrigin: true,
       rewrite: path => {
         let matchPath = ctx.originalUrl;
         const matches = matchPath.match(pathPattern);
@@ -93,7 +79,7 @@ function createProxy(method, pathPattern, target) {
 
         return path.replace(ctx.originalUrl.replace(matchPath, ''), targetPath);
       }
-    });
+    })(ctx, next);
   };
 }
 
