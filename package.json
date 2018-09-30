@@ -1,6 +1,6 @@
 {
   "name": "@huangzj/koa-mock",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "mock for koa middleware",
   "main": "src/index.js",
   "directories": {
@@ -24,6 +24,8 @@
     "chalk": "^2.4.1",
     "chokidar": "^2.0.4",
     "debug": "^4.0.1",
+    "koa": "^2.5.3",
+    "koa-router": "^7.4.0",
     "koa-proxies": "^0.7.0"
   },
   "author": "huangzj",
@@ -33,7 +35,6 @@
   },
   "homepage": "https://github.com/bitores/koa-mock#readme",
   "devDependencies": {
-    "koa": "^2.5.3",
-    "koa-router": "^7.4.0"
+
   }
 }

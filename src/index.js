@@ -63,8 +63,6 @@ function createProxy(method, pathPattern, target) {
   const realTarget = [parsedUrl.protocol, parsedUrl.host].join('//');
   const targetPath = parsedUrl.path;
 
-  console.log(pathPattern)
-
   return (ctx, next) => {
     return proxy(pathPattern, {
       target: realTarget,
@@ -155,8 +153,6 @@ function realApplyMock() {
   mockRules.forEach(mock => {
     router[mock.method]('koaMockMiddleware', mock.path, createMockHandler(mock.method, mock.path, mock.target))
   });
-
-  console.log(router.routes().router.stack)
 
   const watcher = chokidar.watch([configFile, mockDir], {
     ignored: /node_modules/,
