@@ -47,5 +47,5 @@ module.exports = {
         ctx.body = "OK";
     },
     // /cnode/api 会被代理到 https://cnodejs.org/api, 不能代理 https
-    'GET /cnode/(.*)': 'http://shrek.imdevsh.com'
+    'GET /cnode/(.*)': 'https://cnodejs.org'
 };
